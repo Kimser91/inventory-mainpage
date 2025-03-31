@@ -32,18 +32,15 @@ export default {
     try {
         const response = await login({ email: email.value, password: password.value });
 
-        // Lagre token i LocalStorage
         localStorage.setItem('token', response.data.token);
-
-        // Hent brukerdata
+       
         const user = response.data.user;
-
-        // Redirect basert på rolle
+        console.log('user', user)
+       
         if (user.role === 'Hovedadmin' || user.role === 'Admin') {
-            // Send token til admin.* via URL
             window.location.href = `https://admin.inventoryadministrator.com?token=${response.data.token}`;
         } else {
-            window.location.href = 'https://user.inventoryadministrator.com';
+            window.location.href = `https://users.inventoryadministrator.com?token=${response.data.token}`;
         }
     } catch (error) {
         errorMessage.value = 'Feil e-post eller passord';
