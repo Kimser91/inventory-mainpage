@@ -31,17 +31,20 @@ export default {
     const handleLogin = async () => {
     try {
         const response = await login({ email: email.value, password: password.value });
-
-        localStorage.setItem('token', response.data.token);
        
         const user = response.data.user;
         console.log('user', user)
        
         if (user.role === 'Hovedadmin' || user.role === 'Admin') {
-            window.location.href = `https://admin.inventoryadministrator.com?token=${response.data.token}`;
+            const token = response.data.token;
+            window.location.href = `https://admin.inventoryadministrator.com?token=${token}`;
+           
+
         } else {
-            window.location.href = `https://users.inventoryadministrator.com?token=${response.data.token}`;
-        }
+             localStorage.setItem('user.token', response.data.token);
+             window.location.href = `https://user.inventoryadministrator.com`;
+}
+
     } catch (error) {
         errorMessage.value = 'Feil e-post eller passord';
     }
