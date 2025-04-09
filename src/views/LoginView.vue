@@ -34,15 +34,15 @@ export default {
        
         const user = response.data.user;
         console.log('user', user)
-       
-        if (user.role === 'Hovedadmin' || user.role === 'Admin') {
+      
+        if (user.role === 'Superadmin' || user.role === 'Hovedadmin' || user.role === 'Admin') {
             const token = response.data.token;
             window.location.href = `https://admin.inventoryadministrator.com?token=${token}`;
            
 
         } else {
-             localStorage.setItem('user.token', response.data.token);
-             window.location.href = `https://user.inventoryadministrator.com`;
+          const token = response.data.token;
+             window.location.href = `https://users.inventoryadministrator.com?token=${token}`;
 }
 
     } catch (error) {
